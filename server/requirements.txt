@@ -3,4 +3,3 @@ uvicorn
 sqlalchemy
 python-dotenv
 pydantic
-pyscopg2-binary
