@@ -1,6 +1,42 @@
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 import "./singlePost.css";
+import { useEffect, useState } from "react";
 
 const SinglePost = () => {
+	const { id } = useParams();
+	const navigate = useNavigate();
+	const [post, setPost] = useState({
+		title: "",
+		body: "",
+	});
+
+	useEffect(() => {
+		async function getPost() {
+			const res = await axios.get(`http://localhost:8000/posts/${id}`);
+			const data = res.data;
+			if (data.detail?.error !== undefined) {
+				navigate("/error");
+			} else {
+				setPost(data);
+			}
+		}
+		getPost();
+	}, []);
+
+	const handleEdit = () => {
+		// console.log("Edit");
+		navigate(`/posts/${id}/edit`);
+	};
+
+	const handleDelete = async () => {
+		// console.log("Delete");
+		const res = await axios.delete(`http://localhost:8000/posts/${id}`);
+		const data = res.data;
+		// console.log(data);
+		navigate("/");
+	};
+
 	return (
 		<div className="singlePost">
 			<div className="singlePostWrapper">
@@ -10,29 +46,19 @@ const SinglePost = () => {
 					alt="post_img"
 				/>
 				<h1 className="singlePostTitle">
-					Lorem ipsum dolor sit
+					{post.title}
 					<div className="singlePostEdit">
-						<i className="singlePostIcon fa-solid fa-pen-to-square"></i>
-						<i className="singlePostIcon fa-solid fa-trash-can"></i>
+						<i
+							className="singlePostIcon fa-solid fa-pen-to-square"
+							onClick={handleEdit}
+						></i>
+						<i
+							className="singlePostIcon fa-solid fa-trash-can"
+							onClick={handleDelete}
+						></i>
 					</div>
 				</h1>
-				<p className="singlePostDesc">
-					Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure,
-					exercitationem adipisci placeat deserunt minima, fugiat rerum magni
-					officia eius molestias sunt facere, itaque error maxime accusantium
-					porro blanditiis beatae. Nostrum?Lorem ipsum dolor sit amet
-					consectetur, adipisicing elit. Iure, exercitationem adipisci placeat
-					deserunt minima, fugiat rerum magni officia eius molestias sunt
-					facere, itaque error maxime accusantium porro blanditiis beatae.
-					Nostrum?Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-					Iure, exercitationem adipisci placeat deserunt minima, fugiat rerum
-					magni officia eius molestias sunt facere, itaque error maxime
-					accusantium porro blanditiis beatae. Nostrum?Lorem ipsum dolor sit
-					amet consectetur, adipisicing elit. Iure, exercitationem adipisci
-					placeat deserunt minima, fugiat rerum magni officia eius molestias
-					sunt facere, itaque error maxime accusantium porro blanditiis beatae.
-					Nostrum?
-				</p>
+				<p className="singlePostDesc">{post.body}</p>
 			</div>
 		</div>
 	);

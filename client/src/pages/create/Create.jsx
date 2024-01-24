@@ -1,6 +1,28 @@
+import axios from "axios";
+import { useState } from "react";
+import { useNavigate } from 'react-router-dom'
 import "./create.css";
 
 const Create = () => {
+	const navigate = useNavigate();
+
+	const [post, setPost] = useState({
+		title: "",
+		body: "",
+	});
+
+	const handlePublish = async (e) => {
+		e.preventDefault();
+		if (post.title === "" || post.body === "") {
+			alert("Fields cannot by empty");
+		} else {
+			const res = await axios.post("http://localhost:8000/posts", post);
+			const data = res.data;
+			console.log(data);
+			navigate("/");
+		}
+	};
+
 	return (
 		<div className="create">
 			<img
@@ -15,6 +37,8 @@ const Create = () => {
 						autoFocus={true}
 						type="text"
 						placeholder="Title"
+						value={post.title}
+						onChange={(e) => setPost({ ...post, title: e.target.value })}
 					/>
 				</div>
 				<div className="createFormGroup">
@@ -22,9 +46,13 @@ const Create = () => {
 						placeholder="Tell your story..."
 						type="text"
 						className="createInput createText"
+						value={post.body}
+						onChange={(e) => setPost({ ...post, body: e.target.value })}
 					></textarea>
 				</div>
-				<button className="createSubmit">Publish</button>
+				<button className="createSubmit" onClick={(e) => handlePublish(e)}>
+					Publish
+				</button>
 			</form>
 		</div>
 	);

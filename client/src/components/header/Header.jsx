@@ -5,8 +5,8 @@ const Header = () => {
 		<>
 			<div className="header">
 				<div className="headerTitles">
-					<span className="headerTitleSm">React & Node</span>
-					<span className="headerTitleLg">Blogs</span>
+					<span className="headerTitleSm">Welcome to </span>
+					<span className="headerTitleLg">Blogify</span>
 				</div>
 				<img
 					className="headerImg"

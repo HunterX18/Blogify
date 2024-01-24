@@ -1,6 +1,7 @@
 import "./post.css";
+import { Link } from "react-router-dom";
 
-const Post = () => {
+const Post = ({ post }) => {
 	return (
 		<div className="post">
 			<img
@@ -9,17 +10,16 @@ const Post = () => {
 				alt="blog_background"
 			/>
 			<div className="postInfo">
-				<span className="postTitle">Lorem ipsum dolor sit </span>
+				<span className="postTitle">{post.title}</span>
+				<span className="postDesc">
+					<Link
+						to={`/post/${post.id}`}
+						style={{ textDecoration: "none", color: "inherit" }}
+					>
+						Read More
+					</Link>
+				</span>
 			</div>
-			<p className="postDesc">
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo id
-				reprehenderit deleniti odio non pariatur iusto. Sunt, non itaque optio
-				eius soluta tempore autem assumenda id exercitationem in vel
-				consequuntur. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-				Quo id reprehenderit deleniti odio non pariatur iusto. Sunt, non itaque
-				optio eius soluta tempore autem assumenda id exercitationem in vel
-				consequuntur.
-			</p>
 		</div>
 	);
 };
