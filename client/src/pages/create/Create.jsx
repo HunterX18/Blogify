@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useState } from "react";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 import "./create.css";
+import api from "../../api";
 
 const Create = () => {
 	const navigate = useNavigate();
@@ -16,7 +17,7 @@ const Create = () => {
 		if (post.title === "" || post.body === "") {
 			alert("Fields cannot by empty");
 		} else {
-			const res = await axios.post("http://localhost:8000/posts", post);
+			const res = await axios.post(`${api}/posts`, post);
 			const data = res.data;
 			console.log(data);
 			navigate("/");

@@ -2,6 +2,7 @@ import "./edit.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import api from "../../api";
 
 const Edit = () => {
 	const { id } = useParams();
@@ -13,7 +14,7 @@ const Edit = () => {
 
 	useEffect(() => {
 		async function getPost() {
-			const res = await axios.get(`http://localhost:8000/posts/${id}`);
+			const res = await axios.get(`${api}/posts/${id}`);
 			const data = res.data;
 			if (data.detail?.error !== undefined) {
 				navigate("/error");
@@ -28,7 +29,7 @@ const Edit = () => {
 		if (post.title === "" || post.body === "") {
 			alert("Field cannot be empty");
 		} else {
-			const res = await axios.put(`http://localhost:8000/posts/${id}`, post);
+			const res = await axios.put(`${api}/posts/${id}`, post);
 			const data = res.data;
 			// console.log(data);
 			// navigate("/");

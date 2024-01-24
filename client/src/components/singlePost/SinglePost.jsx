@@ -2,6 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import "./singlePost.css";
 import { useEffect, useState } from "react";
+import api from "../../api";
 
 const SinglePost = () => {
 	const { id } = useParams();
@@ -13,7 +14,7 @@ const SinglePost = () => {
 
 	useEffect(() => {
 		async function getPost() {
-			const res = await axios.get(`http://localhost:8000/posts/${id}`);
+			const res = await axios.get(`${api}/posts/${id}`);
 			const data = res.data;
 			if (data.detail?.error !== undefined) {
 				navigate("/error");
@@ -31,7 +32,7 @@ const SinglePost = () => {
 
 	const handleDelete = async () => {
 		// console.log("Delete");
-		const res = await axios.delete(`http://localhost:8000/posts/${id}`);
+		const res = await axios.delete(`${api}/posts/${id}`);
 		const data = res.data;
 		// console.log(data);
 		navigate("/");
